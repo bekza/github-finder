@@ -8,7 +8,8 @@ const GITHUB_TOKRN = process.env.REACT_APP_GITHUB_TOKEN;
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
-    user: [],
+    user: {},
+    repos: [],
     loading: false,
   };
   const [state, dispatch] = useReducer(githubReducer, initialState);
@@ -33,7 +34,6 @@ export const GithubProvider = ({ children }) => {
 
   // Search user
   const getUser = async (login) => {
-    console.log('login=', login);
     setLoading();
 
     const res = await fetch(`${GITHUB_URL}/users/${login}`, {
@@ -45,12 +45,33 @@ export const GithubProvider = ({ children }) => {
       window.location = '/notfound';
     } else {
       const data = await res.json();
-      console.log(data);
       dispatch({
         type: 'GET_USER',
         payload: data,
       });
     }
+  };
+
+  // Get user repositories
+  const getUserRepos = async (login) => {
+    setLoading();
+
+    const params = new URLSearchParams({
+      sort: 'created',
+      per_page: 10,
+    });
+
+    const res = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKRN}`,
+      },
+    });
+
+    const data = await res.json();
+    dispatch({
+      type: 'GET_REPOS',
+      payload: data,
+    });
   };
 
   // clear users from state
@@ -71,9 +92,11 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         user: state.user,
         loading: state.loading,
+        repos: state.repos,
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {children}
