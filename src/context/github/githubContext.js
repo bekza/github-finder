@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import githubReducer from './githubReducer';
+import githubReducer from './GithubReducer';
 const GithubContext = createContext();
 
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
@@ -29,10 +29,12 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  // clear users from state
   const clearUsers = () => {
     dispatch({ type: 'CLEAR_USERS' });
   };
 
+  // set loading
   const setLoading = () => {
     dispatch({
       type: 'SET_LOADING',
