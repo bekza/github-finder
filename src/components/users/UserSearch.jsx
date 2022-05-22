@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import GithubContext from '../../context/github/GithubContext';
+import GithubContext from '../../context/github/githubContext';
 import AlertContext from '../../context/alert/AlertContext';
 import { searchUsers } from '../../context/github/GithubActions';
 
