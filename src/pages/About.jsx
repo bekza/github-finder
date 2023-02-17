@@ -9,11 +9,11 @@ function About() {
         project is part of the.
       </p>
       <p className='text-lg text-gray-400'>
-        Version <span className='text-white'>1.0.0</span>
+        Version <span>1.0.0</span>
       </p>
       <p className='text-lg text-gray-400'>
         Layout By:{' '}
-        <a className='text-white' href='https://github.com/bekza'>
+        <a href='https://github.com/bekza'>
           Bekzat
         </a>
       </p>
